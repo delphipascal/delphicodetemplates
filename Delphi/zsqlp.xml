@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="zsqlp" surround="true" invoke="auto">
+		<point name="variable">
+			<text>
+				Proc
+			</text>
+			<hint>
+				Variable name
+			</hint>
+		</point>
+		<point name="control">
+			<script language="Delphi">
+				InvokeCodeCompletion;
+			</script>
+			<text>
+				ZSqlProcessor
+			</text>
+			<hint>
+				Class name
+			</hint>
+		</point>
+		<point name="createparms">
+			<hint>
+				constructor parameters
+			</hint>
+						<text>
+							(nil)
+						</text>
+		</point>
+		<description>
+			try finally (with Create/Free TZSqlProcessor)
+		</description>
+		<author>
+			Ilham Rizqi Sasmita
+		</author>
+		<script language="Delphi" onenter="false" onleave="true">
+			DeclareVariable(|variable|);
+		</script>
+		<code language="Delphi" context="methodbody" delimiter="|"><![CDATA[|variable| := T|control|.Create|createparms|;
+try
+  |selected|
+  |variable|.Connection:=Connection;
+  |variable|.Script.Text:='INSERT INTO table (field1, field2) VALUES (:field1, :field2);';
+  |variable|.ParamByName('field1').AsString:='';
+  |variable|.ParamByName('field2').AsInteger:=0;
+  |variable|.Execute;
+  |*|
+  |end|
+finally
+  |*|FreeAndNil(|variable|);
+end;
+]]>
+		</code>
+	</template>
+</codetemplate>
+
